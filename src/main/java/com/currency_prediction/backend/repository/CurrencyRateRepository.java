@@ -10,6 +10,8 @@ import com.currency_prediction.backend.model.CurrencyRate;
 public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Integer> {
     List<CurrencyRate> findAll();
 
-    @Query("select c from CurrencyRate c order by id desc limit 1")
-    CurrencyRate findLatestRecord();
+    @Query(nativeQuery = true, value = "select * from currency_rates where code in ('USD', 'EUR', 'JPY', 'THB') order by id desc limit 4")
+    List<CurrencyRate> findLatestRecord();
+
+    List<CurrencyRate> findByCode(String code);
 }
